@@ -64,7 +64,12 @@ $("document").ready(function () {
     mainCardWind.text("Wind Speed: " + currentWind + " mph");
     var mainCardUV = $("<h6>");
     mainCardUV.addClass("card-subtitle mt-4");
-    mainCardUV.text("UV Index: " + currentUV);
+    mainCardUV.text("UV Index: ");
+    var btnUV = $("<a>");
+    btnUV.attr("href","https://www.epa.gov/sunsafety/uv-index-scale-0");
+    btnUV.addClass("btn btn-primary pr-4 pl-4");
+    btnUV.text(currentUV);
+    mainCardUV.append(btnUV);
     mainCardBody.append(
       mainCardTitle,
       mainCardTemp,
@@ -74,7 +79,12 @@ $("document").ready(function () {
     );
     mainCard.append(mainCardBody);
     mainCardDiv.append(mainCard);
-  }
+    // colorUV();
+  };
+
+//   function colorUV(){
+//     if()
+//   };
 
   function renderForecastCards() {
     var forecastCard = $("<div>");
