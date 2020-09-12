@@ -15,6 +15,7 @@ $("document").ready(function () {
   var forecastHeaderDiv = $("#forecast-header");
   var input = $("input");
   var currentCity = "";
+  var currentDate = "";
   var currentTemp = "";
   var currentHumidity = "";
   var currentWind = "";
@@ -51,7 +52,7 @@ $("document").ready(function () {
     mainCardBody.addClass("card-body");
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
-    mainCardTitle.text(currentCity + " (" + moment().format("l") + ")");
+    mainCardTitle.text(currentCity + " (" + currentDate + ")");
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
     mainCardTemp.text("Temperature: " + currentTemp + "º F");
@@ -118,13 +119,9 @@ $("document").ready(function () {
     }).then(function (response) {
       console.log(response);
       currentCity = response.name;
-      currentTemp = parseInt(response.main.temp);
-      currentHumidity = response.main.humidity;
-      currentWind = response.wind.speed;
-      currentUV = "";
+      currentDate = moment.unix(response.dt).format("l");
       latitude = response.coord.lat;
       longitude = response.coord.lon;
-      renderMainCard();
       getForecastInfo();
     });
     function getForecastInfo() {
@@ -138,10 +135,16 @@ $("document").ready(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
+        currentTemp = parseInt(response.current.temp);
+        currentHumidity = response.current.humidity;
+        currentWind = response.current.wind_speed;
+        currentUV = response.current.uvi;
+        renderMainCard();
         forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
         cardDeck = $("<div>");
         cardDeck.addClass("card-deck");
-        for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
+        currentUV = response.current.uvi;
+        for (var dayIndex = 0; dayIndex < 5; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
           forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
           forecastTempLow = parseInt(response.daily[dayIndex].temp.min);
