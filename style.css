@@ -34,3 +34,7 @@ form {
   background-color: purple;
   border-color: purple;
 }
+
+.list-group-item:hover {
+    background-color: #17A2B8;
+}
