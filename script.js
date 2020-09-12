@@ -21,6 +21,11 @@ $("document").ready(function () {
   var currentUV = "";
   var latitude = "";
   var longitude = "";
+  var forecastDate = "";
+  var cardDeck = "";
+  var forecastTempHigh = "";
+  var forecastTempLow = "";
+  var forecastHumidity = "";
 
   function renderHistoryList() {
     var listGroup = $("<ul>");
@@ -69,40 +74,31 @@ $("document").ready(function () {
     mainCardDiv.append(mainCard);
   }
 
-  function renderForecast() {
-    forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
-    var cardDeck = $("<div>");
-    cardDeck.addClass("card-deck");
-    for (var i = 0; i < 5; i++) {
-      var forecastCard = $("<div>");
-      forecastCard.addClass("card text-white bg-info");
-      var forecastCardBody = $("<div>");
-      forecastCardBody.addClass("card-body");
-      var forecastCardTitle = $("<h5>");
-      forecastCardTitle.addClass("card-title");
-      forecastCardTitle.text("Date " + i);
-      var forecastCardImg = $("<img>");
-      forecastCardImg.addClass("card-img");
-      forecastCardImg.attr(
-        "src",
-        "http://openweathermap.org/img/wn/10d@2x.png"
-      );
-      var forecastCardTemp = $("<p>");
-      forecastCardTemp.addClass("card-text");
-      forecastCardTemp.text("Temperature: ");
-      var forecastCardHumid = $("<p>");
-      forecastCardHumid.addClass("card-text");
-      forecastCardHumid.text("Humidity: ");
-      forecastCardBody.append(
-        forecastCardTitle,
-        forecastCardImg,
-        forecastCardTemp,
-        forecastCardHumid
-      );
-      forecastCard.append(forecastCardBody);
-      cardDeck.append(forecastCard);
-    }
-    forecastCardDiv.append(cardDeck);
+  function renderForecastCards() {
+    var forecastCard = $("<div>");
+    forecastCard.addClass("card text-white bg-info");
+    var forecastCardBody = $("<div>");
+    forecastCardBody.addClass("card-body");
+    var forecastCardTitle = $("<h5>");
+    forecastCardTitle.addClass("card-title");
+    forecastCardTitle.text(forecastDate);
+    var forecastCardImg = $("<img>");
+    forecastCardImg.addClass("card-img");
+    forecastCardImg.attr("src", "http://openweathermap.org/img/wn/10d@2x.png");
+    var forecastCardTemp = $("<p>");
+    forecastCardTemp.addClass("card-text");
+    forecastCardTemp.text("Temperature: ");
+    var forecastCardHumid = $("<p>");
+    forecastCardHumid.addClass("card-text");
+    forecastCardHumid.text("Humidity: ");
+    forecastCardBody.append(
+      forecastCardTitle,
+      forecastCardImg,
+      forecastCardTemp,
+      forecastCardHumid
+    );
+    forecastCard.append(forecastCardBody);
+    cardDeck.append(forecastCard);
   }
 
   function getCurrentWeatherInfo() {
@@ -126,27 +122,31 @@ $("document").ready(function () {
       renderMainCard();
       getForecastInfo();
     });
-  }
-  function getForecastInfo() {
-
-    var forecastQueryURL =
-      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-      latitude +
-      "&lon=" +
-      longitude +
-      "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
-    $.ajax({
-      url: forecastQueryURL,
-      method: "GET",
-    }).then(function (response) {
-        for (var dayIndex = 1; dayIndex < 6; dayIndex++){
-            var forecastDate = moment.unix(response.daily[dayIndex].dt).format('l');
-            console.log(forecastDate);
+    function getForecastInfo() {
+      var forecastQueryURL =
+        "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+        latitude +
+        "&lon=" +
+        longitude +
+        "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
+      $.ajax({
+        url: forecastQueryURL,
+        method: "GET",
+      }).then(function (response) {
+        forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
+        cardDeck = $("<div>");
+        cardDeck.addClass("card-deck");
+        for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
+          forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
+          forecastTempHigh = response.daily[dayIndex].temp.max;
+          forecastTempLow = "";
+          forecastHumidity = "";
+          renderForecastCards();
         }
+        forecastCardDiv.append(cardDeck);
         console.log(response);
-        
-      renderForecast();
-    });
+      });
+    }
   }
 
   $("#submit-btn").on("click", function (event) {
