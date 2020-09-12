@@ -7,7 +7,13 @@
 // add if statement that color codes the uv index
 
 // global variables
-var historyArr = ["Atlanta","New York"];
+var historyArr = ["Atlanta", "New York"];
+var currentTemp = "";
+var currentHumidity = "";
+var historyListDiv = $("#history-list");
+var mainCardDiv = $("#main-card-div");
+var forecastCardDiv = $("#forecast-card");
+var forecastHeaderDiv = $("#forecast-header");
 
 function renderHistoryList() {
   var listGroup = $("<ul>");
@@ -18,7 +24,7 @@ function renderHistoryList() {
     listItem.text(historyArr[historyIndex]);
     listGroup.append(listItem);
   }
-  $("#history-list").append(listGroup);
+  historyListDiv.append(listGroup);
 }
 
 function renderMainCard() {
@@ -49,11 +55,11 @@ function renderMainCard() {
     mainCardUV
   );
   mainCard.append(mainCardBody);
-  $("#main-card-div").append(mainCard);
+  mainCardDiv.append(mainCard);
 }
 
 function renderForecast() {
-  $("#forecast-header").append($("<h3>").text("5-Day Forecast"));
+  forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
   var cardDeck = $("<div>");
   cardDeck.addClass("card-deck");
   for (var i = 0; i < 5; i++) {
@@ -82,12 +88,17 @@ function renderForecast() {
     forecastCard.append(forecastCardBody);
     cardDeck.append(forecastCard);
   }
-  $("#forecast-card").append(cardDeck);
+  forecastCardDiv.append(cardDeck);
 }
 
 $("#submit-btn").on("click", function (event) {
   event.preventDefault();
+  historyListDiv.empty();
+  mainCardDiv.empty();
+  forecastHeaderDiv.empty();
+  forecastCardDiv.empty();
   historyArr.push($("input").val());
+  localStorage.setItem("History", historyArr);
   renderMainCard();
   renderForecast();
   renderHistoryList();
