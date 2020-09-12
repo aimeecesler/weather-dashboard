@@ -19,6 +19,8 @@ $("document").ready(function () {
   var currentHumidity = "";
   var currentWind = "";
   var currentUV = "";
+  var latitude = "";
+  var longitude = "";
 
   function renderHistoryList() {
     var listGroup = $("<ul>");
@@ -43,7 +45,7 @@ $("document").ready(function () {
     mainCardBody.addClass("card-body");
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
-    mainCardTitle.text(currentCity + " (" + moment().format('l') + ")");
+    mainCardTitle.text(currentCity + " (" + moment().format("l") + ")");
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
     mainCardTemp.text("Temperature: " + currentTemp + "º F");
@@ -65,7 +67,6 @@ $("document").ready(function () {
     );
     mainCard.append(mainCardBody);
     mainCardDiv.append(mainCard);
-    console.log(currentCity);
   }
 
   function renderForecast() {
@@ -120,21 +121,31 @@ $("document").ready(function () {
       currentHumidity = response.main.humidity;
       currentWind = response.wind.speed;
       currentUV = "";
+      latitude = response.coord.lat;
+      longitude = response.coord.lon;
       renderMainCard();
+      getForecastInfo();
     });
   }
-
   function getForecastInfo() {
-    var forecastLocation = input.val();
+
     var forecastQueryURL =
-      "https://api.openweathermap.org/data/2.5/forecast?q=" +
-      forecastLocation.toLowerCase() +
+      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+      latitude +
+      "&lon=" +
+      longitude +
       "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
     $.ajax({
       url: forecastQueryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response);
+        for (var dayIndex = 1; dayIndex < 6; dayIndex++){
+            var forecastDate = moment.unix(response.daily[dayIndex].dt).format('l');
+            console.log(forecastDate);
+        }
+        console.log(response);
+        
+      renderForecast();
     });
   }
 
@@ -147,9 +158,7 @@ $("document").ready(function () {
     historyArr.push(input.val());
     localStorage.setItem("History", historyArr);
     getCurrentWeatherInfo();
-    renderForecast();
     renderHistoryList();
-    getForecastInfo();
     console.log(historyArr);
   });
 });
