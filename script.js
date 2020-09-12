@@ -9,36 +9,74 @@
 // global variables
 var historyArr = [];
 
-function renderMainCard(){
-    var mainCard = $("<div>");
-    mainCard.addClass("card mt-3 mb-5");
-    var mainCardBody = $("<div>");
-    mainCardBody.addClass("card-body");
-    var mainCardTitle = $("<h2>");
-    mainCardTitle.addClass("card-title");
-    mainCardTitle.text("City Name");
-    var mainCardTemp = $("<h6>");
-    mainCardTemp.addClass("card-subtitle mt-4");
-    mainCardTemp.text("Temperature: ");
-    var mainCardHumid = $("<h6>");
-    mainCardHumid.addClass("card-subtitle mt-4");
-    mainCardHumid.text("Humidity: ");
-    var mainCardWind = $("<h6>");
-    mainCardWind.addClass("card-subtitle mt-4");
-    mainCardWind.text("Wind Speed: ");
-    var mainCardUV = $("<h6>");
-    mainCardUV.addClass("card-subtitle mt-4");
-    mainCardUV.text("UV Index: ");
-    mainCardBody.append(mainCardTitle, mainCardTemp, mainCardHumid, mainCardWind, mainCardUV);
-    mainCard.append(mainCardBody);
-    $("#main-card-div").append(mainCard);
-};
+function renderMainCard() {
+  var mainCard = $("<div>");
+  mainCard.addClass("card mt-3 mb-5");
+  var mainCardBody = $("<div>");
+  mainCardBody.addClass("card-body");
+  var mainCardTitle = $("<h2>");
+  mainCardTitle.addClass("card-title");
+  mainCardTitle.text("City Name");
+  var mainCardTemp = $("<h6>");
+  mainCardTemp.addClass("card-subtitle mt-4");
+  mainCardTemp.text("Temperature: ");
+  var mainCardHumid = $("<h6>");
+  mainCardHumid.addClass("card-subtitle mt-4");
+  mainCardHumid.text("Humidity: ");
+  var mainCardWind = $("<h6>");
+  mainCardWind.addClass("card-subtitle mt-4");
+  mainCardWind.text("Wind Speed: ");
+  var mainCardUV = $("<h6>");
+  mainCardUV.addClass("card-subtitle mt-4");
+  mainCardUV.text("UV Index: ");
+  mainCardBody.append(
+    mainCardTitle,
+    mainCardTemp,
+    mainCardHumid,
+    mainCardWind,
+    mainCardUV
+  );
+  mainCard.append(mainCardBody);
+  $("#main-card-div").append(mainCard);
+}
 
+function renderForecast() {
+  $("#forecast-header").append($("<h3>").text("5-Day Forecast"));
+  var cardDeck = $("<div>");
+  cardDeck.addClass("card-deck");
+  for (var i = 0; i < 5; i++){
+    var forecastCard = $("<div>");
+    forecastCard.addClass("card text-white bg-info");
+    var forecastCardBody = $("<div>");
+    forecastCardBody.addClass("card-body");
+    var forecastCardTitle = $("<h5>");
+    forecastCardTitle.addClass("card-title");
+    forecastCardTitle.text("Date " + i);
+    var forecastCardImg = $("<img>");
+    forecastCardImg.addClass("card-img");
+    forecastCardImg.attr("src", "");
+    var forecastCardTemp = $("<p>");
+    forecastCardTemp.addClass("card-text");
+    forecastCardTemp.text("Temperature: ");
+    var forecastCardHumid = $("<p>");
+    forecastCardHumid.addClass("card-text");
+    forecastCardHumid.text("Humidity: ");
+    forecastCardBody.append(
+      forecastCardTitle,
+      forecastCardImg,
+      forecastCardTemp,
+      forecastCardHumid
+    );
+    forecastCard.append(forecastCardBody);
+    cardDeck.append(forecastCard);
+  }
+  $("#forecast-card").append(cardDeck);
+}
 
-
-$("#submit-btn").on("click",function(event){
-    event.preventDefault();
-    historyArr.push($("input").val());
-    renderMainCard();
-    console.log(historyArr);
+$("#submit-btn").on("click", function (event) {
+  event.preventDefault();
+  historyArr.push($("input").val());
+  renderMainCard();
+  renderForecast();
+  console.log(historyArr);
 });
