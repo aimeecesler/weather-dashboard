@@ -34,10 +34,11 @@ function renderMainCard(){
     $("#main-card-div").append(mainCard);
 };
 
-renderMainCard();
+
 
 $("#submit-btn").on("click",function(event){
     event.preventDefault();
     historyArr.push($("input").val());
+    renderMainCard();
     console.log(historyArr);
 });
