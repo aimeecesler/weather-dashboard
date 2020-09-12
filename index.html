@@ -21,29 +21,29 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3" id="search-form">
-          <h4>Search for a City:</h4>
-          <form class="form-inline">
-            <input class="form-control" type="search" />
-            <button
-              class="btn btn-info fas fa-search ml-2"
-              id="submit-btn"
-              type="submit"
-            ></button>
-          </form>
-          <ul class="list-group">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
+          <div class="row">
+            <h4 class="col-sm-12">Search for a City:</h4>
+          </div>
+          <div class="row">
+            <form class="col-sm-12 form-inline">
+              <input class="form-control" type="search" />
+              <button
+                class="btn btn-info fas fa-search ml-2"
+                id="submit-btn"
+                type="submit"
+              ></button>
+            </form>
+          </div>
+          <div class="row">
+            <div class="col-sm-12" id="history-list"></div>
+          </div>
         </div>
         <div class="col-sm-9">
           <div class="row">
             <div class="col-sm-12" id="main-card-div"></div>
           </div>
           <div class="row">
-            <div class="col-sm-12" id="forecast-header"></div>
+            <div class="col-sm-12 mb-2" id="forecast-header"></div>
           </div>
           <div class="row">
             <div class="col-sm-12" id="forecast-card"></div>

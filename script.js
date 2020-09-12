@@ -7,7 +7,19 @@
 // add if statement that color codes the uv index
 
 // global variables
-var historyArr = [];
+var historyArr = ["Atlanta","New York"];
+
+function renderHistoryList() {
+  var listGroup = $("<ul>");
+  listGroup.addClass("list-group");
+  for (var historyIndex = 0; historyIndex < historyArr.length; historyIndex++) {
+    var listItem = $("<li>");
+    listItem.addClass("list-group-item");
+    listItem.text(historyArr[historyIndex]);
+    listGroup.append(listItem);
+  }
+  $("#history-list").append(listGroup);
+}
 
 function renderMainCard() {
   var mainCard = $("<div>");
@@ -44,7 +56,7 @@ function renderForecast() {
   $("#forecast-header").append($("<h3>").text("5-Day Forecast"));
   var cardDeck = $("<div>");
   cardDeck.addClass("card-deck");
-  for (var i = 0; i < 5; i++){
+  for (var i = 0; i < 5; i++) {
     var forecastCard = $("<div>");
     forecastCard.addClass("card text-white bg-info");
     var forecastCardBody = $("<div>");
@@ -78,5 +90,6 @@ $("#submit-btn").on("click", function (event) {
   historyArr.push($("input").val());
   renderMainCard();
   renderForecast();
+  renderHistoryList();
   console.log(historyArr);
 });
