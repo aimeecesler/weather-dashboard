@@ -138,7 +138,7 @@ $("document").ready(function () {
         currentTemp = parseInt(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
-        currentUV = response.current.uvi;
+        currentUV = parseFloat(response.current.uvi);
         renderMainCard();
         forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
         cardDeck = $("<div>");
