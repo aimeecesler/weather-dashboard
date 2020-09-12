@@ -1,11 +1,36 @@
 .nav {
-    background-color: rgb(63, 62, 62);
-    color: white;
-    padding: 1em;
+  background-color: rgb(63, 62, 62);
+  color: white;
+  padding: 1em;
 }
 form {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 #forecast-card {
-    margin-bottom: 3em;
+  margin-bottom: 3em;
+}
+.uv-low {
+  color: white;
+  background-color: green;
+  border-color: green;
+}
+.uv-moderate {
+  color: white;
+  background-color: yellow;
+  border-color: yellow;
+}
+.uv-high {
+  color: white;
+  background-color: orange;
+  border-color: orange;
+}
+.uv-very-high {
+  color: white;
+  background-color: red;
+  border-color: red;
+}
+.uv-extreme {
+  color: white;
+  background-color: purple;
+  border-color: purple;
 }
