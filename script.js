@@ -67,7 +67,18 @@ $("document").ready(function () {
     mainCardUV.text("UV Index: ");
     var btnUV = $("<a>");
     btnUV.attr("href","https://www.epa.gov/sunsafety/uv-index-scale-0");
-    btnUV.addClass("btn btn-primary pr-4 pl-4");
+    btnUV.addClass("btn pr-4 pl-4");
+    if(currentUV < 3){
+        btnUV.addClass("uv-low");
+    } else if (currentUV < 6) {
+        btnUV.addClass("uv-moderate");
+    } else if (currentUV < 8) {
+        btnUV.addClass("uv-high"); 
+    } else if (currentUV < 11) {
+        btnUV.addClass("uv-very-high"); 
+    } else {
+        btnUV.addClass("uv-extreme"); 
+    }
     btnUV.text(currentUV);
     mainCardUV.append(btnUV);
     mainCardBody.append(
@@ -79,12 +90,7 @@ $("document").ready(function () {
     );
     mainCard.append(mainCardBody);
     mainCardDiv.append(mainCard);
-    // colorUV();
   };
-
-//   function colorUV(){
-//     if()
-//   };
 
   function renderForecastCards() {
     var forecastCard = $("<div>");
