@@ -9,15 +9,16 @@
 $("document").ready(function () {
   // global variables
   var historyArr = ["Atlanta", "New York"];
-  var currentTemp = "";
-  var currentHumidity = "";
-  var currentWind = "";
-  var currentUV = "";
   var historyListDiv = $("#history-list");
   var mainCardDiv = $("#main-card-div");
   var forecastCardDiv = $("#forecast-card");
   var forecastHeaderDiv = $("#forecast-header");
   var input = $("input");
+  var currentCity = "";
+  var currentTemp = "";
+  var currentHumidity = "";
+  var currentWind = "";
+  var currentUV = "";
 
   function renderHistoryList() {
     var listGroup = $("<ul>");
@@ -42,19 +43,19 @@ $("document").ready(function () {
     mainCardBody.addClass("card-body");
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
-    mainCardTitle.text("City Name");
+    mainCardTitle.text(currentCity);
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
-    mainCardTemp.text("Temperature: ");
+    mainCardTemp.text("Temperature: " + currentTemp + "º F");
     var mainCardHumid = $("<h6>");
     mainCardHumid.addClass("card-subtitle mt-4");
-    mainCardHumid.text("Humidity: ");
+    mainCardHumid.text("Humidity: " + currentHumidity + "%");
     var mainCardWind = $("<h6>");
     mainCardWind.addClass("card-subtitle mt-4");
-    mainCardWind.text("Wind Speed: ");
+    mainCardWind.text("Wind Speed: " + currentWind + " mph");
     var mainCardUV = $("<h6>");
     mainCardUV.addClass("card-subtitle mt-4");
-    mainCardUV.text("UV Index: ");
+    mainCardUV.text("UV Index: " + currentUV);
     mainCardBody.append(
       mainCardTitle,
       mainCardTemp,
@@ -64,6 +65,7 @@ $("document").ready(function () {
     );
     mainCard.append(mainCardBody);
     mainCardDiv.append(mainCard);
+    console.log(currentCity);
   }
 
   function renderForecast() {
@@ -104,25 +106,37 @@ $("document").ready(function () {
 
   function getCurrentWeatherInfo() {
     var location = input.val();
-    var currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
+    var currentQueryURL =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      location.toLowerCase() +
+      "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
     $.ajax({
-        url: currentQueryURL,
-        method: "GET",
-    }).then(function(response) {
-        console.log(response);
+      url: currentQueryURL,
+      method: "GET",
+    }).then(function (response) {
+      console.log(response);
+      currentCity = response.name;
+      currentTemp = response.main.temp;
+      currentHumidity = response.main.humidity;
+      currentWind = response.wind.speed;
+      currentUV = "";
+      renderMainCard();
     });
-  };
+  }
 
-  function getForecastInfo(){
-    var location = input.val();
-    var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
+  function getForecastInfo() {
+    var forecastLocation = input.val();
+    var forecastQueryURL =
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+      forecastLocation.toLowerCase() +
+      "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
     $.ajax({
-        url: forecastQueryURL,
-        method: "GET",
-    }).then(function(response) {
-        console.log(response);
+      url: forecastQueryURL,
+      method: "GET",
+    }).then(function (response) {
+      console.log(response);
     });
-  };
+  }
 
   $("#submit-btn").on("click", function (event) {
     event.preventDefault();
@@ -132,10 +146,9 @@ $("document").ready(function () {
     forecastCardDiv.empty();
     historyArr.push(input.val());
     localStorage.setItem("History", historyArr);
-    renderMainCard();
+    getCurrentWeatherInfo();
     renderForecast();
     renderHistoryList();
-    getCurrentWeatherInfo();
     getForecastInfo();
     console.log(historyArr);
   });
