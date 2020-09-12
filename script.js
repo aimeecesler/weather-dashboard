@@ -6,101 +6,125 @@
 // add event listener for a click on a list item, run functions to render main card and 5 day forecast
 // add if statement that color codes the uv index
 
-// global variables
-var historyArr = ["Atlanta", "New York"];
-var currentTemp = "";
-var currentHumidity = "";
-var historyListDiv = $("#history-list");
-var mainCardDiv = $("#main-card-div");
-var forecastCardDiv = $("#forecast-card");
-var forecastHeaderDiv = $("#forecast-header");
+$("document").ready(function () {
+  // global variables
+  var historyArr = ["Atlanta", "New York"];
+  var currentTemp = "";
+  var currentHumidity = "";
+  var currentWind = "";
+  var currentUV = "";
+  var historyListDiv = $("#history-list");
+  var mainCardDiv = $("#main-card-div");
+  var forecastCardDiv = $("#forecast-card");
+  var forecastHeaderDiv = $("#forecast-header");
+  var input = $("input");
 
-function renderHistoryList() {
-  var listGroup = $("<ul>");
-  listGroup.addClass("list-group");
-  for (var historyIndex = 0; historyIndex < historyArr.length; historyIndex++) {
-    var listItem = $("<li>");
-    listItem.addClass("list-group-item");
-    listItem.text(historyArr[historyIndex]);
-    listGroup.append(listItem);
+  function renderHistoryList() {
+    var listGroup = $("<ul>");
+    listGroup.addClass("list-group");
+    for (
+      var historyIndex = 0;
+      historyIndex < historyArr.length;
+      historyIndex++
+    ) {
+      var listItem = $("<li>");
+      listItem.addClass("list-group-item");
+      listItem.text(historyArr[historyIndex]);
+      listGroup.append(listItem);
+    }
+    historyListDiv.append(listGroup);
   }
-  historyListDiv.append(listGroup);
-}
 
-function renderMainCard() {
-  var mainCard = $("<div>");
-  mainCard.addClass("card mt-3 mb-5");
-  var mainCardBody = $("<div>");
-  mainCardBody.addClass("card-body");
-  var mainCardTitle = $("<h2>");
-  mainCardTitle.addClass("card-title");
-  mainCardTitle.text("City Name");
-  var mainCardTemp = $("<h6>");
-  mainCardTemp.addClass("card-subtitle mt-4");
-  mainCardTemp.text("Temperature: ");
-  var mainCardHumid = $("<h6>");
-  mainCardHumid.addClass("card-subtitle mt-4");
-  mainCardHumid.text("Humidity: ");
-  var mainCardWind = $("<h6>");
-  mainCardWind.addClass("card-subtitle mt-4");
-  mainCardWind.text("Wind Speed: ");
-  var mainCardUV = $("<h6>");
-  mainCardUV.addClass("card-subtitle mt-4");
-  mainCardUV.text("UV Index: ");
-  mainCardBody.append(
-    mainCardTitle,
-    mainCardTemp,
-    mainCardHumid,
-    mainCardWind,
-    mainCardUV
-  );
-  mainCard.append(mainCardBody);
-  mainCardDiv.append(mainCard);
-}
-
-function renderForecast() {
-  forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
-  var cardDeck = $("<div>");
-  cardDeck.addClass("card-deck");
-  for (var i = 0; i < 5; i++) {
-    var forecastCard = $("<div>");
-    forecastCard.addClass("card text-white bg-info");
-    var forecastCardBody = $("<div>");
-    forecastCardBody.addClass("card-body");
-    var forecastCardTitle = $("<h5>");
-    forecastCardTitle.addClass("card-title");
-    forecastCardTitle.text("Date " + i);
-    var forecastCardImg = $("<img>");
-    forecastCardImg.addClass("card-img");
-    forecastCardImg.attr("src", "");
-    var forecastCardTemp = $("<p>");
-    forecastCardTemp.addClass("card-text");
-    forecastCardTemp.text("Temperature: ");
-    var forecastCardHumid = $("<p>");
-    forecastCardHumid.addClass("card-text");
-    forecastCardHumid.text("Humidity: ");
-    forecastCardBody.append(
-      forecastCardTitle,
-      forecastCardImg,
-      forecastCardTemp,
-      forecastCardHumid
+  function renderMainCard() {
+    var mainCard = $("<div>");
+    mainCard.addClass("card mt-3 mb-5");
+    var mainCardBody = $("<div>");
+    mainCardBody.addClass("card-body");
+    var mainCardTitle = $("<h2>");
+    mainCardTitle.addClass("card-title");
+    mainCardTitle.text("City Name");
+    var mainCardTemp = $("<h6>");
+    mainCardTemp.addClass("card-subtitle mt-4");
+    mainCardTemp.text("Temperature: ");
+    var mainCardHumid = $("<h6>");
+    mainCardHumid.addClass("card-subtitle mt-4");
+    mainCardHumid.text("Humidity: ");
+    var mainCardWind = $("<h6>");
+    mainCardWind.addClass("card-subtitle mt-4");
+    mainCardWind.text("Wind Speed: ");
+    var mainCardUV = $("<h6>");
+    mainCardUV.addClass("card-subtitle mt-4");
+    mainCardUV.text("UV Index: ");
+    mainCardBody.append(
+      mainCardTitle,
+      mainCardTemp,
+      mainCardHumid,
+      mainCardWind,
+      mainCardUV
     );
-    forecastCard.append(forecastCardBody);
-    cardDeck.append(forecastCard);
+    mainCard.append(mainCardBody);
+    mainCardDiv.append(mainCard);
   }
-  forecastCardDiv.append(cardDeck);
-}
 
-$("#submit-btn").on("click", function (event) {
-  event.preventDefault();
-  historyListDiv.empty();
-  mainCardDiv.empty();
-  forecastHeaderDiv.empty();
-  forecastCardDiv.empty();
-  historyArr.push($("input").val());
-  localStorage.setItem("History", historyArr);
-  renderMainCard();
-  renderForecast();
-  renderHistoryList();
-  console.log(historyArr);
+  function renderForecast() {
+    forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
+    var cardDeck = $("<div>");
+    cardDeck.addClass("card-deck");
+    for (var i = 0; i < 5; i++) {
+      var forecastCard = $("<div>");
+      forecastCard.addClass("card text-white bg-info");
+      var forecastCardBody = $("<div>");
+      forecastCardBody.addClass("card-body");
+      var forecastCardTitle = $("<h5>");
+      forecastCardTitle.addClass("card-title");
+      forecastCardTitle.text("Date " + i);
+      var forecastCardImg = $("<img>");
+      forecastCardImg.addClass("card-img");
+      forecastCardImg.attr(
+        "src",
+        "http://openweathermap.org/img/wn/10d@2x.png"
+      );
+      var forecastCardTemp = $("<p>");
+      forecastCardTemp.addClass("card-text");
+      forecastCardTemp.text("Temperature: ");
+      var forecastCardHumid = $("<p>");
+      forecastCardHumid.addClass("card-text");
+      forecastCardHumid.text("Humidity: ");
+      forecastCardBody.append(
+        forecastCardTitle,
+        forecastCardImg,
+        forecastCardTemp,
+        forecastCardHumid
+      );
+      forecastCard.append(forecastCardBody);
+      cardDeck.append(forecastCard);
+    }
+    forecastCardDiv.append(cardDeck);
+  }
+
+  function getCurrentWeatherInfo() {
+    var location = input.val();
+    var currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17"
+    $.ajax({
+        url: currentQueryURL,
+        method: "GET",
+    }).then(function(response) {
+        console.log(response);
+    });
+  };
+
+  $("#submit-btn").on("click", function (event) {
+    event.preventDefault();
+    historyListDiv.empty();
+    mainCardDiv.empty();
+    forecastHeaderDiv.empty();
+    forecastCardDiv.empty();
+    historyArr.push(input.val());
+    localStorage.setItem("History", historyArr);
+    renderMainCard();
+    renderForecast();
+    renderHistoryList();
+    getCurrentWeatherInfo();
+    console.log(historyArr);
+  });
 });
