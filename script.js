@@ -43,7 +43,7 @@ $("document").ready(function () {
     mainCardBody.addClass("card-body");
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
-    mainCardTitle.text(currentCity);
+    mainCardTitle.text(currentCity + " (" + moment().format('l') + ")");
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
     mainCardTemp.text("Temperature: " + currentTemp + "º F");
