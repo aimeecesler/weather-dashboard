@@ -26,6 +26,7 @@ $("document").ready(function () {
   var forecastTempHigh = "";
   var forecastTempLow = "";
   var forecastHumidity = "";
+  var forecastIcon = "";
 
   function renderHistoryList() {
     var listGroup = $("<ul>");
@@ -84,17 +85,21 @@ $("document").ready(function () {
     forecastCardTitle.text(forecastDate);
     var forecastCardImg = $("<img>");
     forecastCardImg.addClass("card-img");
-    forecastCardImg.attr("src", "http://openweathermap.org/img/wn/10d@2x.png");
-    var forecastCardTemp = $("<p>");
-    forecastCardTemp.addClass("card-text");
-    forecastCardTemp.text("Temperature: ");
+    forecastCardImg.attr("src", "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png");
+    var forecastCardTempHigh = $("<p>");
+    forecastCardTempHigh.addClass("card-text");
+    forecastCardTempHigh.text("High: " + forecastTempHigh + "º F");
+    var forecastCardTempLow = $("<p>");
+    forecastCardTempLow.addClass("card-text");
+    forecastCardTempLow.text("Low: " + forecastTempLow + "º F");
     var forecastCardHumid = $("<p>");
     forecastCardHumid.addClass("card-text");
-    forecastCardHumid.text("Humidity: ");
+    forecastCardHumid.text("Humidity: " + forecastHumidity + "%");
     forecastCardBody.append(
       forecastCardTitle,
       forecastCardImg,
-      forecastCardTemp,
+      forecastCardTempHigh,
+      forecastCardTempLow,
       forecastCardHumid
     );
     forecastCard.append(forecastCardBody);
@@ -113,7 +118,7 @@ $("document").ready(function () {
     }).then(function (response) {
       console.log(response);
       currentCity = response.name;
-      currentTemp = response.main.temp;
+      currentTemp = parseInt(response.main.temp);
       currentHumidity = response.main.humidity;
       currentWind = response.wind.speed;
       currentUV = "";
@@ -138,9 +143,10 @@ $("document").ready(function () {
         cardDeck.addClass("card-deck");
         for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
-          forecastTempHigh = response.daily[dayIndex].temp.max;
-          forecastTempLow = "";
-          forecastHumidity = "";
+          forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
+          forecastTempLow = parseInt(response.daily[dayIndex].temp.min);
+          forecastHumidity = response.daily[dayIndex].humidity;
+          forecastIcon = response.daily[dayIndex].weather[0].icon;
           renderForecastCards();
         }
         forecastCardDiv.append(cardDeck);
