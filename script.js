@@ -104,9 +104,20 @@ $("document").ready(function () {
 
   function getCurrentWeatherInfo() {
     var location = input.val();
-    var currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17"
+    var currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
     $.ajax({
         url: currentQueryURL,
+        method: "GET",
+    }).then(function(response) {
+        console.log(response);
+    });
+  };
+
+  function getForecastInfo(){
+    var location = input.val();
+    var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + location.toLowerCase() + "&units=imperial&appid=da407777b164e6e32bbe74723dadca17";
+    $.ajax({
+        url: forecastQueryURL,
         method: "GET",
     }).then(function(response) {
         console.log(response);
@@ -125,6 +136,7 @@ $("document").ready(function () {
     renderForecast();
     renderHistoryList();
     getCurrentWeatherInfo();
+    getForecastInfo();
     console.log(historyArr);
   });
 });
