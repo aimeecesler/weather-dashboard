@@ -8,7 +8,7 @@
 
 $("document").ready(function () {
   // global variables
-  var historyArr = ["Atlanta", "New York"];
+  var historyArr = [];
   var historyListDiv = $("#history-list");
   var mainCardDiv = $("#main-card-div");
   var forecastCardDiv = $("#forecast-card");
@@ -29,6 +29,14 @@ $("document").ready(function () {
   var forecastTempLow = "";
   var forecastHumidity = "";
   var forecastIcon = "";
+
+  checkLocalStorage();
+
+  function checkLocalStorage() {
+    var localStorageArr = localStorage.getItem("History").split(",");
+    historyArr = localStorageArr;
+    renderHistoryList();
+  }
 
   function renderHistoryList() {
     var listGroup = $("<ul>");
@@ -136,7 +144,6 @@ $("document").ready(function () {
       url: currentQueryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response);
       currentCity = response.name;
       latitude = response.coord.lat;
       longitude = response.coord.lon;
@@ -154,7 +161,6 @@ $("document").ready(function () {
         method: "GET",
       }).then(function (response) {
         currentDate = moment.unix(response.daily[0].dt).format("l");
-        console.log(response.current.dt + response.timezone_offset);
         currentTemp = parseInt(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
@@ -173,7 +179,6 @@ $("document").ready(function () {
           renderForecastCards();
         }
         forecastCardDiv.append(cardDeck);
-        console.log(response);
       });
     }
   }
@@ -196,7 +201,6 @@ $("document").ready(function () {
     forecastHeaderDiv.empty();
     forecastCardDiv.empty();
     location = $(this).text();
-    console.log(location);
     getCurrentWeatherInfo();
   });
 });
