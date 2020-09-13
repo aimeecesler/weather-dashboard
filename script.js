@@ -138,7 +138,6 @@ $("document").ready(function () {
     }).then(function (response) {
       console.log(response);
       currentCity = response.name;
-      currentDate = moment.unix(response.dt).format("l");
       latitude = response.coord.lat;
       longitude = response.coord.lon;
       getForecastInfo();
@@ -154,6 +153,8 @@ $("document").ready(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
+        currentDate = moment.unix(response.daily[0].dt).format("l");
+        console.log(response.current.dt + response.timezone_offset);
         currentTemp = parseInt(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
@@ -163,7 +164,7 @@ $("document").ready(function () {
         cardDeck = $("<div>");
         cardDeck.addClass("card-deck");
         currentUV = response.current.uvi;
-        for (var dayIndex = 0; dayIndex < 5; dayIndex++) {
+        for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
           forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
           forecastTempLow = parseInt(response.daily[dayIndex].temp.min);
