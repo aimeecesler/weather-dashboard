@@ -27,6 +27,7 @@ $("document").ready(function () {
   var currentHumidity = "";
   var currentWind = "";
   var currentUV = "";
+  var currentIcon = "";
 
   //   latitude and longitude used to call location from forecast API (only takes coordinates)
   var latitude = "";
@@ -82,6 +83,9 @@ $("document").ready(function () {
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
     mainCardTitle.text(currentCity + " (" + currentDate + ")");
+    // create current weather icon image
+    var mainCardImg = $("<img>");
+    mainCardImg.attr("src","http://openweathermap.org/img/wn/" + currentIcon + "@2x.png");
     // create the current temperature line
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
@@ -119,6 +123,7 @@ $("document").ready(function () {
     // add all items to the card body
     mainCardBody.append(
       mainCardTitle,
+      mainCardImg,
       mainCardTemp,
       mainCardHumid,
       mainCardWind,
@@ -217,11 +222,13 @@ $("document").ready(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
+        console.log(response);
         currentDate = moment.unix(response.daily[0].dt).format("l");
         currentTemp = parseInt(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
         currentUV = parseFloat(response.current.uvi);
+        currentIcon = response.current.weather[0].icon;
         // uses above variables to render main card with current weather info
         renderMainCard();
         // begins the creation of the single use items in the forecast div
