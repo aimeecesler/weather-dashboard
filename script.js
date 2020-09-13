@@ -130,29 +130,46 @@ $("document").ready(function () {
     mainCardDiv.append(mainCard);
   }
 
+  // creates the forecast header and initializes the card deck
+  function startForecastDiv() {
+    forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
+    cardDeck = $("<div>");
+    cardDeck.addClass("card-deck");
+  }
+
+  // Renders the cards with current weather info.
+  // Called when submit button is clicked or a city from the search history list is clicked
   function renderForecastCards() {
+    // creates daily card
     var forecastCard = $("<div>");
     forecastCard.addClass("card text-white bg-info");
+    // creates daily card body
     var forecastCardBody = $("<div>");
     forecastCardBody.addClass("card-body");
+    // creates daily card title
     var forecastCardTitle = $("<h5>");
     forecastCardTitle.addClass("card-title");
     forecastCardTitle.text(forecastDate);
+    // creates daily card icon
     var forecastCardImg = $("<img>");
     forecastCardImg.addClass("card-img");
     forecastCardImg.attr(
       "src",
       "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png"
     );
+    // creates daily card high temp line
     var forecastCardTempHigh = $("<p>");
     forecastCardTempHigh.addClass("card-text");
     forecastCardTempHigh.text("High: " + forecastTempHigh + "º F");
+    // creates daily card low temp line
     var forecastCardTempLow = $("<p>");
     forecastCardTempLow.addClass("card-text");
     forecastCardTempLow.text("Low: " + forecastTempLow + "º F");
+    // creates daily card humidity line
     var forecastCardHumid = $("<p>");
     forecastCardHumid.addClass("card-text");
     forecastCardHumid.text("Humidity: " + forecastHumidity + "%");
+    // add all items to daily card body
     forecastCardBody.append(
       forecastCardTitle,
       forecastCardImg,
@@ -160,7 +177,9 @@ $("document").ready(function () {
       forecastCardTempLow,
       forecastCardHumid
     );
+    // adds daily card body to daily card
     forecastCard.append(forecastCardBody);
+    // adds daily card to the card deck
     cardDeck.append(forecastCard);
   }
 
@@ -195,10 +214,7 @@ $("document").ready(function () {
         currentWind = response.current.wind_speed;
         currentUV = parseFloat(response.current.uvi);
         renderMainCard();
-        forecastHeaderDiv.append($("<h3>").text("5-Day Forecast"));
-        cardDeck = $("<div>");
-        cardDeck.addClass("card-deck");
-        currentUV = response.current.uvi;
+        startForecastDiv();
         for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
           forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
