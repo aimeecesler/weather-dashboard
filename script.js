@@ -8,12 +8,18 @@
 
 $("document").ready(function () {
   // global variables
+  //   history list variables
   var historyArr = [];
+
+  //   div and input variables
   var historyListDiv = $("#history-list");
   var mainCardDiv = $("#main-card-div");
   var forecastCardDiv = $("#forecast-card");
   var forecastHeaderDiv = $("#forecast-header");
   var input = $("input");
+
+  //   main/current card variables
+  var cardDeck = "";
   var location = "";
   var currentCity = "";
   var currentDate = "";
@@ -21,21 +27,27 @@ $("document").ready(function () {
   var currentHumidity = "";
   var currentWind = "";
   var currentUV = "";
+
+  //   latitude and longitude used to call location from forecast API (only takes coordinates)
   var latitude = "";
   var longitude = "";
+
+  //   forecast card variables
   var forecastDate = "";
-  var cardDeck = "";
   var forecastTempHigh = "";
   var forecastTempLow = "";
   var forecastHumidity = "";
   var forecastIcon = "";
 
+  // function to call on page load - checks local storage for historical search date
   checkLocalStorage();
 
   function checkLocalStorage() {
-    var localStorageArr = localStorage.getItem("History").split(",");
-    historyArr = localStorageArr;
-    renderHistoryList();
+    if (localStorage.getItem("History") != null) {
+      var localStorageArr = localStorage.getItem("History").split(",");
+      historyArr = localStorageArr;
+      renderHistoryList();
+    }
   }
 
   function renderHistoryList() {
