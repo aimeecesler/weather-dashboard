@@ -39,9 +39,11 @@ $("document").ready(function () {
   var forecastHumidity = "";
   var forecastIcon = "";
 
-  // function to call on page load - checks local storage for historical search date
+  // function call on page load
   checkLocalStorage();
 
+  //  checks local storage for historical searches.
+  // If local storage is not empty, pushes storage values to history array and renders history list.
   function checkLocalStorage() {
     if (localStorage.getItem("History") != null) {
       var localStorageArr = localStorage.getItem("History").split(",");
@@ -50,6 +52,7 @@ $("document").ready(function () {
     }
   }
 
+  //   renders the history list based on the history array
   function renderHistoryList() {
     var listGroup = $("<ul>");
     listGroup.addClass("list-group");
@@ -66,29 +69,40 @@ $("document").ready(function () {
     historyListDiv.append(listGroup);
   }
 
+  // Renders the main card with current weather info.
+  // Called when submit button is clicked or a city from the search history list is clicked
   function renderMainCard() {
+    //   create the main card
     var mainCard = $("<div>");
     mainCard.addClass("card mt-3 mb-5");
+    // create the main card bocy
     var mainCardBody = $("<div>");
     mainCardBody.addClass("card-body");
+    // create the main card title
     var mainCardTitle = $("<h2>");
     mainCardTitle.addClass("card-title");
     mainCardTitle.text(currentCity + " (" + currentDate + ")");
+    // create the current temperature line
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
     mainCardTemp.text("Temperature: " + currentTemp + "º F");
+    // create the current humidity line
     var mainCardHumid = $("<h6>");
     mainCardHumid.addClass("card-subtitle mt-4");
     mainCardHumid.text("Humidity: " + currentHumidity + "%");
+    // create the current wind line
     var mainCardWind = $("<h6>");
     mainCardWind.addClass("card-subtitle mt-4");
     mainCardWind.text("Wind Speed: " + currentWind + " mph");
+    // create the UV line
     var mainCardUV = $("<h6>");
     mainCardUV.addClass("card-subtitle mt-4");
     mainCardUV.text("UV Index: ");
+    // add a button to the UV line
     var btnUV = $("<a>");
     btnUV.attr("href", "https://www.epa.gov/sunsafety/uv-index-scale-0");
     btnUV.addClass("btn pr-4 pl-4");
+    // colors the UV index button based on the UV index level
     if (currentUV < 3) {
       btnUV.addClass("uv-low");
     } else if (currentUV < 6) {
@@ -102,6 +116,7 @@ $("document").ready(function () {
     }
     btnUV.text(currentUV);
     mainCardUV.append(btnUV);
+    // add all items to the card body
     mainCardBody.append(
       mainCardTitle,
       mainCardTemp,
@@ -109,7 +124,9 @@ $("document").ready(function () {
       mainCardWind,
       mainCardUV
     );
+    // add the card body to the card
     mainCard.append(mainCardBody);
+    // add the card to the div
     mainCardDiv.append(mainCard);
   }
 
