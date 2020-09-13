@@ -14,6 +14,7 @@ $("document").ready(function () {
   var forecastCardDiv = $("#forecast-card");
   var forecastHeaderDiv = $("#forecast-header");
   var input = $("input");
+  var location = "";
   var currentCity = "";
   var currentDate = "";
   var currentTemp = "";
@@ -66,18 +67,18 @@ $("document").ready(function () {
     mainCardUV.addClass("card-subtitle mt-4");
     mainCardUV.text("UV Index: ");
     var btnUV = $("<a>");
-    btnUV.attr("href","https://www.epa.gov/sunsafety/uv-index-scale-0");
+    btnUV.attr("href", "https://www.epa.gov/sunsafety/uv-index-scale-0");
     btnUV.addClass("btn pr-4 pl-4");
-    if(currentUV < 3){
-        btnUV.addClass("uv-low");
+    if (currentUV < 3) {
+      btnUV.addClass("uv-low");
     } else if (currentUV < 6) {
-        btnUV.addClass("uv-moderate");
+      btnUV.addClass("uv-moderate");
     } else if (currentUV < 8) {
-        btnUV.addClass("uv-high"); 
+      btnUV.addClass("uv-high");
     } else if (currentUV < 11) {
-        btnUV.addClass("uv-very-high"); 
+      btnUV.addClass("uv-very-high");
     } else {
-        btnUV.addClass("uv-extreme"); 
+      btnUV.addClass("uv-extreme");
     }
     btnUV.text(currentUV);
     mainCardUV.append(btnUV);
@@ -90,7 +91,7 @@ $("document").ready(function () {
     );
     mainCard.append(mainCardBody);
     mainCardDiv.append(mainCard);
-  };
+  }
 
   function renderForecastCards() {
     var forecastCard = $("<div>");
@@ -102,7 +103,10 @@ $("document").ready(function () {
     forecastCardTitle.text(forecastDate);
     var forecastCardImg = $("<img>");
     forecastCardImg.addClass("card-img");
-    forecastCardImg.attr("src", "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png");
+    forecastCardImg.attr(
+      "src",
+      "http://openweathermap.org/img/wn/" + forecastIcon + "@2x.png"
+    );
     var forecastCardTempHigh = $("<p>");
     forecastCardTempHigh.addClass("card-text");
     forecastCardTempHigh.text("High: " + forecastTempHigh + "º F");
@@ -124,7 +128,6 @@ $("document").ready(function () {
   }
 
   function getCurrentWeatherInfo() {
-    var location = input.val();
     var currentQueryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       location.toLowerCase() +
@@ -180,10 +183,19 @@ $("document").ready(function () {
     mainCardDiv.empty();
     forecastHeaderDiv.empty();
     forecastCardDiv.empty();
-    historyArr.push(input.val());
+    location = input.val();
+    historyArr.push(location);
     localStorage.setItem("History", historyArr);
     getCurrentWeatherInfo();
     renderHistoryList();
-    console.log(historyArr);
+  });
+
+  historyListDiv.on("click", ".list-group-item", function () {
+    mainCardDiv.empty();
+    forecastHeaderDiv.empty();
+    forecastCardDiv.empty();
+    location = $(this).text();
+    console.log(location);
+    getCurrentWeatherInfo();
   });
 });
