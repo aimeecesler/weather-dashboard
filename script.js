@@ -243,24 +243,33 @@ $("document").ready(function () {
     }
   }
 
+  // listens for a click on the submit button
   $("#submit-btn").on("click", function (event) {
     event.preventDefault();
+    // clears all the divs
     historyListDiv.empty();
     mainCardDiv.empty();
     forecastHeaderDiv.empty();
     forecastCardDiv.empty();
+    // gets the input value and adds it to local storage
     location = input.val();
     historyArr.push(location);
     localStorage.setItem("History", historyArr);
+    // calls the function to render info for the input value
     getCurrentWeatherInfo();
+    // adds the input value to the history list
     renderHistoryList();
   });
 
+  // listens for a click on a list item in the history list
   historyListDiv.on("click", ".list-group-item", function () {
+    // clears all the card divs
     mainCardDiv.empty();
     forecastHeaderDiv.empty();
     forecastCardDiv.empty();
+    // sets the location based on the list item clicked
     location = $(this).text();
+    // calls the function to render info for the list item
     getCurrentWeatherInfo();
   });
 });
