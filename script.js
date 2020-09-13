@@ -70,7 +70,7 @@ $("document").ready(function () {
   }
 
   // Renders the main card with current weather info.
-  // Called when submit button is clicked or a city from the search history list is clicked
+  // Called by the getCurrentWeatherInfo function
   function renderMainCard() {
     //   create the main card
     var mainCard = $("<div>");
@@ -138,7 +138,7 @@ $("document").ready(function () {
   }
 
   // Renders the cards with current weather info.
-  // Called when submit button is clicked or a city from the search history list is clicked
+  // Called by the getCurrentWeatherInfo function
   function renderForecastCards() {
     // creates daily card
     var forecastCard = $("<div>");
@@ -183,6 +183,8 @@ $("document").ready(function () {
     cardDeck.append(forecastCard);
   }
 
+  // First API Call for current weather info
+  // Called when submit button is clicked or a city from the search history list is clicked
   function getCurrentWeatherInfo() {
     var currentQueryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -192,11 +194,18 @@ $("document").ready(function () {
       url: currentQueryURL,
       method: "GET",
     }).then(function (response) {
+      /* mostly use this API for name and coordinates because second API call
+      requires coordinates instead of a search and 
+      this one does not have all the required current weather info */
       currentCity = response.name;
       latitude = response.coord.lat;
       longitude = response.coord.lon;
+      // makes second API call
       getForecastInfo();
     });
+
+    // Second API Call for forecasted weather info
+    // Called by the getCurrentWeatherInfo function
     function getForecastInfo() {
       var forecastQueryURL =
         "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -213,16 +222,22 @@ $("document").ready(function () {
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
         currentUV = parseFloat(response.current.uvi);
+        // uses above variables to render main card with current weather info
         renderMainCard();
+        // begins the creation of the single use items in the forecast div
         startForecastDiv();
+        // for loop to create one card for each of the 5 forecasted days
+        // starts at location 1 because 0 is the forecast for the current day
         for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
           forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
           forecastTempLow = parseInt(response.daily[dayIndex].temp.min);
           forecastHumidity = response.daily[dayIndex].humidity;
           forecastIcon = response.daily[dayIndex].weather[0].icon;
+          // uses above variables to render each card with daily forecast info
           renderForecastCards();
         }
+        // adds the card deck to the forecast div
         forecastCardDiv.append(cardDeck);
       });
     }
