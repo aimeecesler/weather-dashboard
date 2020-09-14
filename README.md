@@ -37,7 +37,13 @@ Edit using VSCode after [installation](#installation). HTML, JS and CSS files ar
 
 ## Building the Weather Dashboard
 
-TEXT
+When a user enters this dashboard for the first time they will simply see a search form. After entering a city in the search form, upon submit the page will render information on the current weather as well as a five day forecast for the city. The current weather section will display the city name, current date (in that city), weather condition icon, temperature, humidity, wind speed and UV index number. The user will notice that the UV index number is color coded, should they want more information on the color coding the user can click the UV index and will be redirected to a new tab with details about UV indexes and their meanings. The 5-Day Forecast section will show the date, weather condition icon, high and low temperatures, and the humidity for each of the next 5 days respectively.
+
+In addition to displaying the information for the searched city, the page will also add each searched city to a search history list with the most recent searched city first. If the user wishes to see data on a previously searched city, they can click on that city in the list and the data will appear. In addition, if the user refreshes the page the search history will persist and the user will see data for the most recently searched city (top of the search history list).
+
+One of the issues encountered when building this dashboard was that the current date was returned in UNIX format, I utilized the momentJS library to convert the UNIX time stamp to a standard MM/DD/YYYY format. In addition, another issue that I encountered also involved the date. I noticed that when searching cities a full day ahead of my current location that they would still show my current date rather than the current date in that location. After further investigation I found a "timezone_offset" variable in the response object. I discovered that OpenWeatherMap returns dates in the UTC timezone and if this offset number was added to the UNIX value for the date, I would then get the current date/time in my desired location.
+
+One final hurdle that I had to overcome was that the while the Open Weather - One Call API gave me all the weather data I needed for the current and forecasted weather it required latitude and longitude parameters for it's API call rather than using a city name. Since my application required that a user could search by a city name, I utilized the Open Weather - Current Weather Data API first to retrieve the coordinates by city name and then in turn used those coordinates to make a call on the One Call API.
 
 -----
 
