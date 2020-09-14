@@ -221,7 +221,7 @@ $("document").ready(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
-        currentDate = moment.unix(response.daily[0].dt).format("l");
+        currentDate = moment.unix(response.daily[0].dt + response.timezone_offset).format("l");
         currentTemp = Math.round(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
@@ -234,7 +234,7 @@ $("document").ready(function () {
         // for loop to create one card for each of the 5 forecasted days
         // starts at location 1 because 0 is the forecast for the current day
         for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
-          forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
+          forecastDate = moment.unix(response.daily[dayIndex].dt + response.timezone_offset).format("l");
           forecastTempHigh = Math.round(response.daily[dayIndex].temp.max);
           forecastTempLow = Math.round(response.daily[dayIndex].temp.min);
           forecastHumidity = response.daily[dayIndex].humidity;
