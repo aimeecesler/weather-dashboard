@@ -16,13 +16,13 @@ form {
 }
 .uv-moderate {
   color: white;
-  background-color: yellow;
-  border-color: yellow;
+  background-color: gold;
+  border-color: gold;
 }
 .uv-high {
   color: white;
-  background-color: orange;
-  border-color: orange;
+  background-color: rgb(255, 102, 0);
+  border-color: rgb(255, 102, 0);
 }
 .uv-very-high {
   color: white;
@@ -37,4 +37,5 @@ form {
 
 .list-group-item:hover {
     background-color: #17A2B8;
+    color: white;
 }
