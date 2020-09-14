@@ -49,6 +49,8 @@ $("document").ready(function () {
     if (localStorage.getItem("History") != null) {
       var localStorageArr = localStorage.getItem("History").split(",");
       historyArr = localStorageArr;
+      location = historyArr[historyArr.length - 1]
+      getCurrentWeatherInfo();
       renderHistoryList();
     }
   }
@@ -222,7 +224,6 @@ $("document").ready(function () {
         url: forecastQueryURL,
         method: "GET",
       }).then(function (response) {
-        console.log(response);
         currentDate = moment.unix(response.daily[0].dt).format("l");
         currentTemp = Math.round(response.current.temp);
         currentHumidity = response.current.humidity;
