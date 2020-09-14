@@ -224,10 +224,10 @@ $("document").ready(function () {
       }).then(function (response) {
         console.log(response);
         currentDate = moment.unix(response.daily[0].dt).format("l");
-        currentTemp = parseInt(response.current.temp);
+        currentTemp = Math.round(response.current.temp);
         currentHumidity = response.current.humidity;
         currentWind = response.current.wind_speed;
-        currentUV = parseFloat(response.current.uvi);
+        currentUV = response.current.uvi;
         currentIcon = response.current.weather[0].icon;
         // uses above variables to render main card with current weather info
         renderMainCard();
@@ -237,8 +237,8 @@ $("document").ready(function () {
         // starts at location 1 because 0 is the forecast for the current day
         for (var dayIndex = 1; dayIndex < 6; dayIndex++) {
           forecastDate = moment.unix(response.daily[dayIndex].dt).format("l");
-          forecastTempHigh = parseInt(response.daily[dayIndex].temp.max);
-          forecastTempLow = parseInt(response.daily[dayIndex].temp.min);
+          forecastTempHigh = Math.round(response.daily[dayIndex].temp.max);
+          forecastTempLow = Math.round(response.daily[dayIndex].temp.min);
           forecastHumidity = response.daily[dayIndex].humidity;
           forecastIcon = response.daily[dayIndex].weather[0].icon;
           // uses above variables to render each card with daily forecast info
