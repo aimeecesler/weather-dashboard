@@ -78,7 +78,7 @@ $("document").ready(function () {
     //   create the main card
     var mainCard = $("<div>");
     mainCard.addClass("card mt-3 mb-5");
-    // create the main card bocy
+    // create the main card body
     var mainCardBody = $("<div>");
     mainCardBody.addClass("card-body");
     // create the main card title
