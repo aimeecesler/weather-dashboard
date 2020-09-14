@@ -49,7 +49,7 @@ $("document").ready(function () {
     if (localStorage.getItem("History") != null) {
       var localStorageArr = localStorage.getItem("History").split(",");
       historyArr = localStorageArr;
-      location = historyArr[historyArr.length - 1]
+      location = historyArr[historyArr.length - 1];
       getCurrentWeatherInfo();
       renderHistoryList();
     }
@@ -87,7 +87,10 @@ $("document").ready(function () {
     mainCardTitle.text(currentCity + " (" + currentDate + ")");
     // create current weather icon image
     var mainCardImg = $("<img>");
-    mainCardImg.attr("src","http://openweathermap.org/img/wn/" + currentIcon + "@2x.png");
+    mainCardImg.attr(
+      "src",
+      "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
+    );
     // create the current temperature line
     var mainCardTemp = $("<h6>");
     mainCardTemp.addClass("card-subtitle mt-4");
