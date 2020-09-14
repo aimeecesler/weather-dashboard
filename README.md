@@ -1,6 +1,6 @@
 # WEATHER DASHBOARD
 
-TEXT
+The purpose of this repository is to create a weather dashboard where someone can research the current weather and 5 day forecast for a selected city.
 
 -----
 
