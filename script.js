@@ -65,7 +65,7 @@ $("document").ready(function () {
       var listItem = $("<li>");
       listItem.addClass("list-group-item");
       listItem.text(historyArr[historyIndex]);
-      listGroup.append(listItem);
+      listGroup.prepend(listItem);
     }
     historyListDiv.append(listGroup);
   }
