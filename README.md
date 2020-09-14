@@ -4,7 +4,7 @@ The purpose of this repository is to create a weather dashboard where someone ca
 
 -----
 
-![WEATHER DASHBOARD]()
+![WEATHER DASHBOARD](weather.PNG)
 
 ## Table of Contents
 * [Installation](#installation)
@@ -28,9 +28,10 @@ The purpose of this repository is to create a weather dashboard where someone ca
 ## Usage
 Edit using VSCode after [installation](#installation). HTML, JS and CSS files are provided.
 
-#### Javascript
+#### Javascript and HTML
 
-![JS]()
+![JS](javascript.PNG)
+![HTML](html.PNG)
 
 -----
 
