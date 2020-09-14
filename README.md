@@ -67,6 +67,7 @@ As always, a huge thanks to our instructional staff for all their hard work!
 * [w3schools](https://www.w3schools.com)
 * [Bootstrap CSS](https://getbootstrap.com/)
 * [jQuery](https://jquery.com/)
+* [Moment.js](https://momentjs.com/)
 * [Open Weather API - Current Weather](https://openweathermap.org/current)
 * [Open Weather API - One Call API](https://openweathermap.org/api/one-call-api)
 * [EPA - UV Index Scale](https://www.epa.gov/sunsafety/uv-index-scale-0)
