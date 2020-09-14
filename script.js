@@ -103,6 +103,7 @@ $("document").ready(function () {
     // add a button to the UV line
     var btnUV = $("<a>");
     btnUV.attr("href", "https://www.epa.gov/sunsafety/uv-index-scale-0");
+    btnUV.attr("target","_blank");
     btnUV.addClass("btn pr-4 pl-4 font-weight-bold");
     // colors the UV index button based on the UV index level
     if (currentUV < 3) {
