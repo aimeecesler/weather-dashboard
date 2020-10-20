@@ -12,6 +12,7 @@ The purpose of this repository is to create a weather dashboard where someone ca
 * [Building the Weather Dashboard](#building-the-weather-dashboard)
 * [Acceptance Criteria](#acceptance-criteria)
 * [Credits](#credits)
+* [Contact](#contact)
 * [Badges](#badges)
 * [Links](#Links)
 * [License](#license)
@@ -77,6 +78,12 @@ As always, a huge thanks to our instructional staff for all their hard work!
 * [Open Weather API - Current Weather](https://openweathermap.org/current)
 * [Open Weather API - One Call API](https://openweathermap.org/api/one-call-api)
 * [EPA - UV Index Scale](https://www.epa.gov/sunsafety/uv-index-scale-0)
+
+-----
+
+## Contact
+Find me on LinkedIn!
+[Aimee Esler](https://www.linkedin.com/in/aimee-esler-3bb31288/)
 
 -----
 
